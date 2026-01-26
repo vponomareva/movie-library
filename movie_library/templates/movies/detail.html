@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    {% if movie.poster %}
+      <img src="{{ movie.poster.url }}" class="img-fluid rounded" alt="{{ movie.title }}">
+    {% else %}
+      <img src="{% static 'images/no-poster.png' %}" class="card-img-top movie-poster">
+    {% endif %}
+  </div>
+    
+  <div class="col-md-8">
+    <h1>{{ movie.title }} <small class="text-muted">({{ movie.release_year }})</small></h1>
+        
+    <p class="lead">{{ movie.description }}</p>
+        
+    <div class="mb-3">
+      <strong>Режиссеры:</strong>
+        {% for director in movie.directors.all %}
+          <span class="badge bg-info">{{ director.name }}</span>
+        {% endfor %}
+    </div>
+        
+    <div class="mb-3">
+      <strong>Актеры:</strong>
+        {% for actor in movie.actors.all %}
+          <span class="badge bg-secondary">{{ actor.name }}</span>
+        {% endfor %}
+    </div>
+        
+    <div class="mb-3">
+      <strong>Жанры:</strong>
+        {% for genre in movie.genres.all %}
+          <span class="badge bg-success">{{ genre.name }}</span>
+        {% endfor %}
+    </div>
+        
+    <a href="{% url 'movies:movie_list' %}" class="btn btn-outline-primary">← Назад к списку</a>
+  </div>
+</div>
+{% endblock %}
