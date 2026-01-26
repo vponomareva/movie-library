@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="display-4 mb-4">О проекте 🎬</h1>
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Фильмотека</h5>
+                    <p class="card-text">
+                        Это онлайн-библиотека фильмов, созданная на Django. Здесь вы можете:
+                    </p>
+                    <ul>
+                        <li>Просматривать каталог фильмов</li>
+                        <li>Искать фильмы по названию</li>
+                        <li>Смотреть подробную информацию о каждом фильме</li>
+                        <li>Регистрироваться и создавать свой аккаунт (в разработке)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Технологии</h5>
+                            <ul class="list-unstyled">
+                                <li>🐍 Django 4.0+</li>
+                                <li>📁 SQLite (база данных)</li>
+                                <li>🎨 Bootstrap 5</li>
+                                <li>🖼️ Django Images (постеры)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Статистика</h5>
+                            <p class="mb-1">Фильмов в базе: <strong>{{ movies_count }}</strong></p>
+                            <p class="mb-1">Жанров: <strong>{{ genres_count }}</strong></p>
+                            <p class="mb-1">Актеров: <strong>{{ actors_count }}</strong></p>
+                            <p class="mb-1">Режиссеров: <strong>{{ directors_count }}</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Контакты</h5>
+                    <p>По вопросам сотрудничества и предложениям:</p>
+                    <!-- <p class="mb-1">📧 Email: ...</p> -->
+                    <p class="mb-0">📍 GitHub: 
+                      <a href="https://github.com/vponomareva">https://github.com/vponomareva</a>
+</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'movies:movie_list' %}" class="btn btn-primary btn-lg">
+                    Перейти к фильмам
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

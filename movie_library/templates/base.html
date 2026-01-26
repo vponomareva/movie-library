@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Фильмотека{% endblock %}</title>
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <style>
+    body { padding-top: 20px; }
+    .movie-card { margin-bottom: 10px; }
+    .movie-poster { width: 70%; height: 50%; object-fit: contain; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">🎬 Фильмотека</a>
+				<div class="navbar-nav">
+          <a class="nav-link" href="{% url 'about' %}">О проекте</a>
+        </div>
+      </div>
+    </nav>    
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

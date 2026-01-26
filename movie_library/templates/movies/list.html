@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Поиск -->
+<form method="get" class="mb-4">
+  <div class="input-group">
+    <input type="text" name="search" class="form-control" 
+      placeholder="Поиск фильмов..." value="{{ search_query }}">
+    <button class="btn btn-primary" type="submit">Найти</button>
+  </div>
+</form>
+
+<h1 class="mb-4">Каталог фильмов</h1>
+
+<!-- Кнопка сброса поиска -->
+{% if search_query %}
+  <div class="mb-3">
+    <small>Результаты поиска: "{{ search_query }}"</small>
+    <a href="?" class="btn btn-sm btn-outline-secondary ms-2">Сбросить</a>
+  </div>
+{% endif %}
+
+<!-- Карточки фильмов -->
+<div class="row">
+  {% for movie in movies %}
+  <div class="col-md-4 mb-4">
+    <div class="card movie-card h-100">
+      {% if movie.poster %}
+        <img src="{{ movie.poster.url }}" class="card-img-top movie-poster" alt="{{ movie.title }}">
+      {% else %}
+        <img src="{% static 'images/no-poster.png' %}" class="card-img-top movie-poster">  
+      {% endif %}
+            
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">{{ movie.release_year }}</p>
+        <p class="card-text text-muted">
+          {% for genre in movie.genres.all|slice:":3" %}
+            <span class="badge bg-secondary">{{ genre.name }}</span>
+          {% endfor %}
+        </p>
+        <a href="/{{ movie.id }}/" class="btn btn-primary">Подробнее</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <p class="text-center">Фильмы не найдены</p>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Пагинация -->
+{% if movies.paginator.num_pages > 1 %}
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if movies.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}">Первая</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Назад</a>
+      </li>
+    {% endif %}
+          
+    <li class="page-item disabled">
+      <span class="page-link">
+        Страница {{ movies.number }} из {{ movies.paginator.num_pages }}
+      </span>
+    </li>
+          
+    {% if movies.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}">Вперед</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}">Последняя</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock %}
